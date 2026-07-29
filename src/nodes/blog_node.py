@@ -68,16 +68,14 @@ class BlogNode:
             HumanMessage(content=formatted_text)
 
         ]
-        translated_content= self.llm.with_structured_output(Blog).invoke(messages)
+        translated_content = self.llm.with_structured_output(Blog).invoke(messages)
+        # Convert Pydantic object to dict for state consistency
+        return {"blog": translated_content.model_dump()}
 
-        return {"blog":translated_content}
-
-    #def route(self,state:BlogState):
-     #   return {"current_language": state["current_language"]}
 
     def route(self, state: BlogState):
-        # FIX: Use .get() or simply pass state through without trying to access direct key index
-        return {"current_language": state.get("current_language", "")}
+        return {"current_language": state.get("current_language", "english")}
+
 
     def route_decision(self, state: BlogState):
         """
@@ -89,7 +87,7 @@ class BlogNode:
         elif state["current_language"] == "french":
             return "french"
         else:
-            return state["current_language"]
+            return "english"
 
 
         

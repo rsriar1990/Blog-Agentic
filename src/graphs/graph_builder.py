@@ -51,7 +51,9 @@ class GraphBuilder:
             self.blog_node_obj.route_decision,
             {
                 "hindi": "hindi_translation",
-                "french": "french_translation"
+                "french": "french_translation",
+                "english": END,
+                "default": END
             }
         )
         self.graph.add_edge("hindi_translation",END)
